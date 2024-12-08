@@ -19,6 +19,8 @@
     <button type="button" onclick="submitForm()">Submit</button>
   </form>
 
+  <p id="response"></p> <!-- Placeholder to display the server response -->
+
   <script>
     function submitForm() {
       const jsonPayload = JSON.stringify({
@@ -30,13 +32,26 @@
 
       fetch('https://cse543.aranjbar.me/backend/tfourtwo', {
         method: 'POST',
-        mode: 'no-cors', // Disable CORS preflight
         headers: {
-          'Content-Type': 'text/plain'
+          'Content-Type': 'application/json' // Ensure proper content type for JSON
         },
         body: jsonPayload,
         credentials: 'include' // Include session cookies
       })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.text(); // Parse response as text
+      })
+      .then(data => {
+        // Display the response data
+        document.getElementById('response').innerText = `Response: ${data}`;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('response').innerText = `Error: ${error.message}`;
+      });
     }
   </script>
 </body>
