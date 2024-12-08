@@ -24,23 +24,13 @@
     function prepareJsonPayload() {
       // Collect form values
       const username = document.getElementById('username').value;
-      const fname = document.getElementById('fname').value;
-      const amount = document.getElementById('amount').value;
-      const comment = document.getElementById('comment').value;
+      const data = new FormData(event.target);
 
-      // Create JSON payload
-      const jsonPayload = JSON.stringify({
-        username: username,
-        fname: fname,
-        amount: amount,
-        comment: comment
-      });
+const value = Object.fromEntries(data.entries());
 
-      // Assign JSON payload to hidden input
-      document.getElementById('jsonPayload').value = jsonPayload;
+value.topics = data.getAll("topics");
+console.log({ value });
 
-      // Change form submission content-type
-      document.getElementById('csrfForm').setAttribute('enctype', 'text/plain');
     }
   </script>
 </body>
