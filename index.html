@@ -1,48 +1,60 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit JSON Request</title>
+</head>
 <body>
-  <h1>Claim Your Reward!</h1>
-  <p>Fill out the details below:</p>
-
+  <h1>Submit Your Details</h1>
   <form id="rewardForm">
     <label for="username">Username:</label>
-    <input type="text" id="username" value="ljl5837"><br><br>
+    <input type="text" id="username" name="username" value="ljl5837" required><br><br>
 
     <label for="fname">First Name:</label>
-    <input type="text" id="fname" value="lks"><br><br>
+    <input type="text" id="fname" name="fname" value="lks" required><br><br>
 
     <label for="amount">Amount:</label>
-    <input type="number" id="amount" value="10000"><br><br>
+    <input type="number" id="amount" name="amount" value="10000" required><br><br>
 
     <label for="comment">Comment:</label>
-    <input type="text" id="comment" value="what's your name"><br><br>
+    <input type="text" id="comment" name="comment" value="what's your name" required><br><br>
 
     <button type="button" onclick="submitForm()">Submit</button>
   </form>
 
+  <h2>Server Response:</h2>
+  <pre id="responseOutput" style="border: 1px solid #ccc; padding: 10px; margin-top: 10px; white-space: pre-wrap;"></pre>
+
   <script>
-    function submitForm() {
-      const jsonPayload = JSON.stringify({
+    async function submitForm() {
+      // Collect the form data
+      const formData = {
         username: document.getElementById('username').value,
         fname: document.getElementById('fname').value,
         amount: document.getElementById('amount').value,
         comment: document.getElementById('comment').value,
-      });
+      };
 
-      fetch('https://cse543.aranjbar.me/backend/tfourtwo', {
-        method: 'POST',
-        mode: 'no-cors', // Disable CORS preflight
-        headers: {
-          'Content-Type': 'Content-Type: text/plain'
-        },
-        body: jsonPayload,
-        credentials: 'include' // Include session cookies
-      })
-      .then((res) => {
-       return res;
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+      try {
+        // Send the JSON payload to the server
+        const response = await fetch('https://cse543.aranjbar.me/backend/tfourtwo', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        // Parse the response
+        const jsonResponse = await response.json();
+
+        // Display the JSON response in the output area
+        document.getElementById('responseOutput').textContent = JSON.stringify(jsonResponse, null, 2);
+      } catch (error) {
+        // Display any errors
+        document.getElementById('responseOutput').textContent = `Error: ${error.message}`;
+      }
     }
   </script>
 </body>
